@@ -30,7 +30,7 @@
 #******************************************************
 
 rm(list=ls())
-wd = "C:/Users/xl027/Desktop/25.SPDE_SS/code/20180814"
+wd = "C:/Users/xl027/Desktop/25.SPDE_SS/code/20180814/example3/Github"
 #wd = "/home/local/GACL/xl027" # Department cluster
 #wd = "/home/xl027/20180814" # University HPC
 setwd(wd)
@@ -86,9 +86,9 @@ clusterEvalQ(cl, library(dlm))
 #******************************************************
 #******************************************************
 
-load("data/data_0313_example3_process.RData")
-load("data/data_0313_example3_ksi.RData")
-load("data/data_0313_example3_grd_original.RData")
+load("data_0313_example3_process.RData")
+load("data_0313_example3_ksi.RData")
+load("data_0313_example3_grd_original.RData")
 
 delta.t = 0.1
 n.alpha = nrow(Alpha)
@@ -217,38 +217,9 @@ Gamma_y = rnorm(J*3,0,0.5)
 # para=c(Gamma_x,Gamma_y,log(0.1),0.9,log(0.1),log(0.01)) # initial value used for numerical example
 para=c(Gamma_x,Gamma_y,log(0.1),2,log(1),log(0.01),log(1),log(0.05)) # initial value used for ??
 
-if (FALSE){ # experiment on any given data
-  para = c(0.525718,-0.00822336,0.529647,0.126,-0.156029,0.227366,0.173406,-0.0571207,0.154358,0.0349777,
-           0.0329025,0.0982553,-0.0866539,1.02965,-1.53307,-1.22437,-0.00161903,0.0943836,0.0821221,
-           0.0593901,0.0918977,0.0782136,0.0074565,-0.198935,-2.30259,0.98,-2.30259,-4.60517)
-  para = c(0.159078,0.184187, 0.211178, 0.154759, 0.19268, 0.215934, 0.275602, -0.246209, 0.260745, 0.297466,
-           -0.191235, 0.259999, -0.273255, 0.3, -0.3, -0.3, -0.00161903, 0.0943836, 0.0821221, 0.0593901, 0.0918977,
-           0.0782136, 0.0074565, -0.198935, -2.30259, 0.98, -2.30259, -4.60517)
-  Gamma_x = para[1:(3*J)]
-  Gamma_y = para[(3*J+1):(6*J)]
-  
-  mu = convection_fun_1(X.input=X, gamma_x=Gamma_x,gamma_y=Gamma_y) # in example 2, adjust the scale of mu
-  mu = v.max * tanh(mu) # this is used in the analysis part; need to bound the velocity
-  plot(grd.original)
-  arrows(coordinates(grd.original)[,1],coordinates(grd.original)[,2],
-         coordinates(grd.original)[,1]+mu[,1],
-         coordinates(grd.original)[,2]+mu[,2],length=0.05,col="darkgreen",lwd=1)
-}
-
-
-if (FALSE){ # plot the velocity field based on the initial value
-  mu = convection_fun_1(X.input=X, gamma_x=Gamma_x,gamma_y=Gamma_y) # in example 2, adjust the scale of mu
-  mu = v.max * tanh(mu) # this is used in the analysis part; need to bound the velocity
-  plot(grd.original)
-  arrows(coordinates(grd.original)[,1],coordinates(grd.original)[,2],
-         coordinates(grd.original)[,1]+mu[,1],
-         coordinates(grd.original)[,2]+mu[,2],length=0.05,col="darkgreen",lwd=1)
-}
 
 
 int.precision = 10 # number of intervals for calculate the covariance matrix of W
-
-
 l.fun = function(para, Alpha.l.fun, d.t, precision, V.max,
                  X.l, J.l, n.x.l, n.y.l, grd.original.l,
                  kernel.sigma.l,kernel.list.l,
@@ -477,4 +448,4 @@ t.e = proc.time()-t.s
 t.e
 
 # save output to a RData file. The output will be used by "SPDE_Output_e3.R" for visualization
-save.image("J4_example3.RData")
+save.image("J4_example3_c.RData")

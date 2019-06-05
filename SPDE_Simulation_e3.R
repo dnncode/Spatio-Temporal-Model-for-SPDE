@@ -61,7 +61,7 @@ clusterEvalQ(cl, library(expm))
 # Basic settings
 #******************************************************
 #******************************************************
-wd = "C:/Users/xl027/Desktop/25.SPDE_SS/code/20180814"
+wd = "C:/Users/xl027/Desktop/25.SPDE_SS/code/20180814/example3/Github"
 setwd(wd)
 colPalette <- adjustcolor(colorRampPalette(brewer.pal(n=9, 'YlOrRd'))(100), .85)
 #colPalette = rgb(r=c(0:255), g=51, b=255, maxColorValue=255, alpha=255)
@@ -75,7 +75,7 @@ colPalette.basis <-adjustcolor(colorRampPalette(brewer.pal(n=9, 'Greys'))(100), 
 #******************************************************
 #******************************************************
 # alpha0 (alpha0 is obtained from a radar image)
-load("processedData/M2010L23S81.RData") # load a radar image data, which will be used as the initial condition
+load("M2010L23S81.RData") # load a radar image data, which will be used as the initial condition
 n.alpha = length(alpha)
 
 #******************************************************
@@ -415,32 +415,6 @@ dummy = foreach(ll = 5:(n.k1+n.k2)) %dopar% {
 g.mat.2[5:(n.k1+n.k2),] = do.call(rbind,dummy)
 
 
-# for (ll in 1:n.alpha){
-#   if (ll<=4){
-#     g.mat.2[ll,1:n.k1] = sapply(1:n.k1, My.fun2,l=ll, Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k1, Ky=omega.2.k1, 
-#                                 base1=phi.c.mat.k1, base2.c=phi.c.mat.k1, base2.s=phi.s.mat.k1, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / C
-#     g.mat.2[ll,(n.k1+1):(n.k1+n.k2)] = 2*sapply(1:n.k2, My.fun2,l=ll, Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k2, Ky=omega.2.k2, 
-#                                                 base1=phi.c.mat.k1, base2.c=phi.c.mat.k2, base2.s=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / C
-#     g.mat.2[ll,(n.k1+n.k2+1):(n.k1+2*n.k2)] = 2*sapply(1:n.k2, My.fun3,l=ll, Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k2, Ky=omega.2.k2, 
-#                                                        base1=phi.s.mat.k1, base2.c=phi.c.mat.k2, base2.s=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / C
-#   }else if (ll>(n.k1+n.k2)){
-#     g.mat.2[ll,1:n.k1] = sapply(1:n.k1, My.fun2,l=(ll-n.k1-n.k2), Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k1, Ky=omega.2.k1, 
-#                                 base1=phi.s.mat.k2, base2.c=phi.c.mat.k1, base2.s=phi.s.mat.k1, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)  / (2*C)
-#     g.mat.2[ll,(n.k1+1):(n.k1+n.k2)] = 2* sapply(1:n.k2, My.fun2,l=(ll-n.k1-n.k2), Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k2, Ky=omega.2.k2, 
-#                                                  base1=phi.s.mat.k2, base2.c=phi.c.mat.k2, base2.s=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / (2*C)
-#     g.mat.2[ll,(n.k1+n.k2+1):(n.k1+2*n.k2)] = 2*sapply(1:n.k2, My.fun3,l=(ll-n.k1-n.k2), Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k2, Ky=omega.2.k2, 
-#                                                        base1=phi.s.mat.k2, base2.c=phi.c.mat.k2, base2.s=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / (2*C)
-#   }else{
-#     g.mat.2[ll,1:n.k1] = sapply(1:n.k1, My.fun2,l=(ll-n.k1), Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k1, Ky=omega.2.k1, 
-#                                 base1=phi.c.mat.k2, base2.c=phi.c.mat.k1, base2.s=phi.s.mat.k1, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / (2*C)
-#     g.mat.2[ll,(n.k1+1):(n.k1+n.k2)] = 2* sapply(1:n.k2, My.fun2,l=(ll-n.k1),Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k2, Ky=omega.2.k2, 
-#                                                  base1=phi.c.mat.k2, base2.c=phi.c.mat.k2, base2.s=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)/ (2*C)
-#     g.mat.2[ll,(n.k1+n.k2+1):(n.k1+2*n.k2)] =  2*sapply(1:n.k2, My.fun3,l=(ll-n.k1), Sigma=sigma, Div.Sigma=div.sigma, Kx=omega.1.k2, Ky=omega.2.k2, 
-#                                                         base1=phi.c.mat.k2, base2.c=phi.c.mat.k2, base2.s=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)/ (2*C)
-#   }
-# }
-# dim(g.mat.2)
-
 #******************************************************
 # the transition matrix g related to Zeta
 #******************************************************
@@ -480,40 +454,10 @@ dummy = foreach(ll = 5:(n.k1+n.k2)) %dopar% {
 g.mat.3[5:(n.k1+n.k2),] = do.call(rbind,dummy)
 
 
-# for (ll in 1:n.alpha){
-#   if (ll<=4){
-#     g.mat.3[ll,1:n.k1] = sapply(1:n.k1, My.fun4,l=ll, Zeta = zeta,  
-#                                 base1=phi.c.mat.k1, base2=phi.c.mat.k1, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / C
-#     g.mat.3[ll,(n.k1+1):(n.k1+n.k2)] = 2*sapply(1:n.k2, My.fun4,l=ll, Zeta = zeta,
-#                                                 base1=phi.c.mat.k1, base2=phi.c.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / C
-#     g.mat.3[ll,(n.k1+n.k2+1):(n.k1+2*n.k2)] = 2*sapply(1:n.k2, My.fun4,l=ll, Zeta = zeta,
-#                                                        base1=phi.c.mat.k1, base2=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / C
-#     
-#   }else if (ll>(n.k1+n.k2)){
-#     g.mat.3[ll,1:n.k1] = sapply(1:n.k1, My.fun4,l=(ll-n.k1-n.k2), Zeta = zeta,
-#                                 base1=phi.s.mat.k2, base2=phi.c.mat.k1, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / (2*C)
-#     g.mat.3[ll,(n.k1+1):(n.k1+n.k2)] = 2* sapply(1:n.k2, My.fun4,l=(ll-n.k1-n.k2), Zeta = zeta,
-#                                                  base1=phi.s.mat.k2, base2=phi.c.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)/ (2*C)
-#     g.mat.3[ll,(n.k1+n.k2+1):(n.k1+2*n.k2)] = 2*sapply(1:n.k2, My.fun4,l=(ll-n.k1-n.k2), Zeta = zeta,
-#                                                        base1=phi.s.mat.k2, base2=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)/ (2*C)
-#   }else{
-#     g.mat.3[ll,1:n.k1] = sapply(1:n.k1, My.fun4,l=(ll-n.k1), Zeta = zeta,
-#                                 base1=phi.c.mat.k2, base2=phi.c.mat.k1, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y) / (2*C)
-#     g.mat.3[ll,(n.k1+1):(n.k1+n.k2)] = 2* sapply(1:n.k2, My.fun4,l=(ll-n.k1), Zeta = zeta,
-#                                                  base1=phi.c.mat.k2, base2=phi.c.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)/ (2*C)
-#     g.mat.3[ll,(n.k1+n.k2+1):(n.k1+2*n.k2)] = 2*sapply(1:n.k2, My.fun4,l=(ll-n.k1), Zeta = zeta,
-#                                                        base1=phi.c.mat.k2, base2=phi.s.mat.k2, N=(n.x*n.y), Ds.x = delta.x, Ds.y=delta.y)/ (2*C)
-#   }
-# }
-# dim(g.mat.3)
-
-#save.image("output0903.RData")
-
-
 #******************************************************
 # the transition matrix g related to generation, q
 #******************************************************
-load("data/data_0313_example3_beta.RData") 
+load("data_0313_example3_beta.RData") 
 # load the Fourier coefficients for the source-sink term, which are pre-calculated by "SPDE_Get_Beta.R"
 
 
@@ -628,11 +572,11 @@ for (j in 2:n.t){
 #******************************************************
 data = KSI.matrix
 if (FALSE){
-  save(data, file="data/data_0313_example3_ksi.RData")
-  save(grd.original, file="data/data_0313_example3_grd_original.RData")
-  save(G, file="data/data_0313_example3_G.RData")
-  save(noise, file="data/data_0313_example3_Noise.RData")
-  save.image("data/data_0313_example3.RData")
+  save(data, file="data_0313_example3_ksi.RData")
+  save(grd.original, file="data_0313_example3_grd_original.RData")
+  save(G, file="data_0313_example3_G.RData")
+  save(noise, file="data_0313_example3_Noise.RData")
+  save.image("data_0313_example3.RData")
 }
 
 

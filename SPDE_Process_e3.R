@@ -26,7 +26,7 @@
 
 
 rm(list=ls())
-wd = "C:/Users/xl027/Desktop/25.SPDE_SS/code/20180814"
+wd = "C:/Users/xl027/Desktop/25.SPDE_SS/code/20180814/example3/Github"
 setwd(wd)
 
 #******************************************************
@@ -60,8 +60,8 @@ colPalette1 <- rev(rainbow(34, start=5/6, end=3/6, alpha=0.8))
 #******************************************************
 #******************************************************
 if (TRUE){  #for example 3
-  load("data/data_0313_example3_ksi.RData")
-  load("data/data_0313_example3_grd_original.RData")
+  load("data_0313_example3_ksi.RData")
+  load("data_0313_example3_grd_original.RData")
 }
 #******************************************************
 #******************************************************
@@ -182,7 +182,7 @@ for (i.t in 1:n.t){
   Alpha[,i.t] = alpha
   
   # output figures
-  png(filename = paste("../../figures/numerical3/figure_", i.t, ".png", sep=""),
+  png(filename = paste("figures/figure_", i.t, ".png", sep=""),
       width = 8, height =3, unit="in", pointsize = 12,
       bg = "white", res = 600)
   par(mfrow = c(1, 3))
@@ -210,7 +210,7 @@ for (i.t in 1:n.t){
 
 # visualization 2: put the first 6 radar images on the same figure
 Alpha = array(0/0,dim=c(n.alpha, n.t))
-png(filename = paste("../../figures/numerical3/figure_big", ".png", sep=""),
+png(filename = paste("figures/figure_big", ".png", sep=""),
        width = 8, height = 5.5, unit="in", pointsize = 12,
         bg = "white", res = 600)
 par(mfcol = c(2, 3))
@@ -340,7 +340,7 @@ dev.off()
 #******************************************************
 #******************************************************
 if (FALSE){
-  save.image("data/data_0313_example3_process.RData")
+  save.image("data_0313_example3_process.RData")
 }
 
 
